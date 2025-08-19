@@ -13,8 +13,7 @@ terraform {
 provider "azurerm" {
   features {}
 
-  subscription_id = "fad53211-8c45-4e57-bf84-8f7c35bc6193"   # Azure subscription ID
-tenant_id       = "1b4eaaad-b887-48cf-8407-e99420eda2fb"         # Azure AD tenant ID
+
 }
 
 # Create a resource group
