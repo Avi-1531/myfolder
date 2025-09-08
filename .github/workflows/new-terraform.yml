@@ -37,7 +37,8 @@ jobs:
 
     # 5. Terraform Apply (apply changes to Azure)
     - name: Terraform Apply
-      run: terraform apply -auto-approve \
+      run: | 
+          terraform apply -auto-approve \
           -target=azurerm_subnet.example \
           -target=azurerm_network_interface.example \
           -target=azurerm_windows_virtual_machine.example
