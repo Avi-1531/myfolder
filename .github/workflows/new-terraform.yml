@@ -1,0 +1,48 @@
+name: Terraform Azure Deployment
+
+on:
+  push:
+    branches:
+        -main  
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout repository
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    # 2. Setup Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.12.2
+
+    # 3. Terraform Init (initializes working directory)
+    - name: Terraform Init
+      run: terraform init
+
+    # 4. Terraform Plan (see what Terraform will do)
+    - name: Terraform Plan
+      run: terraform plan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+    # 5. Terraform Apply (apply changes to Azure)
+    - name: Terraform Apply
+      run: terraform apply -auto-approve \
+          -target=azurerm_subnet.example \
+          -target=azurerm_network_interface.example \
+          -target=azurerm_windows_virtual_machine.example
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
