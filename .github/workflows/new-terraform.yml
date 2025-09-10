@@ -42,6 +42,8 @@ jobs:
           -target=azurerm_subnet.example \
           -target=azurerm_network_interface.example \
           -target=azurerm_windows_virtual_machine.example
+  # this target doesn't work as it has dependencies on the previously
+#created resources that is vnet and resource group so target doesn't fully comply that it is going to work so only way is to do changes in the terraform file 
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
